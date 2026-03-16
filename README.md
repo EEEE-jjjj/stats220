@@ -22,10 +22,10 @@ In this course we learn about *R code*, including R and Markdown.
 1. Sleeping
 2. Gaming
 3. Eating too much
-4. Bad sleeping patten
+4. Bad sleeping pattern
 
 ---
-## A Youtube video contains final exam answer of Stats 220
+## A YouTube video containing the final exam answers for STATS220
 ### !!!Open this link without anyone around you !!!
 
 https://www.youtube.com/watch?v=dQw4w9WgXcQ&list=RDdQw4w9WgXcQ&start_radio=1
