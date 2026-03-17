@@ -28,6 +28,7 @@ In this course we learn about *R code*, including R and Markdown.
 ## A YouTube video of Max Verstappen  F1 2024 Sao Paulo Grand Prix
 
 [https://www.youtube.com/watch?v=dQw4w9WgXcQ&list=RDdQw4w9WgXcQ&start_radio=1](https://www.youtube.com/watch?v=rPapZJ8n3xs)
+
 ---
 
 ## About me
