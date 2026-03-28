@@ -1,0 +1,108 @@
+---
+title: My dynamic report
+output: html_fragment
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo=FALSE, message=FALSE, warning=FALSE, error=FALSE)
+
+library(tidyverse)
+```
+
+```{css}
+body {
+  font-family: Arial, sans-serif;
+  line-height: 1.7;
+  color: #222222;
+  max-width: 900px;
+  margin: auto;
+  padding: 20px;
+}
+
+h2 {
+  color: #2c3e50;
+  border-bottom: 2px solid #d9e2ec;
+  padding-bottom: 8px;
+}
+
+p {
+  font-size: 16px;
+  margin-bottom: 14px;
+}
+
+img {
+  max-width: 100%;
+}
+
+strong {
+  color: #1f4e79;
+}
+```
+
+## What can be learned from my vehicle observations?
+
+This dynamic report presents observational data about vehicles I recorded over time. The data focuses on four main features: the type of vehicle observed, the brand origin, the cleanliness score, and whether the vehicle appeared new or not.
+
+The purpose of this report is to summarise key patterns in the observations and demonstrate how a dynamic report can automatically update when new responses are added to the linked Google Form and Google Sheet.
+
+```{r}
+logged_data <- read_csv("https://docs.google.com/spreadsheets/d/e/2PACX-1vSFTm-eXrXyj3gEA9BOLHDY30t5utk1GmSt5hfCN8Hj_2RIbzgxa89WVtzMqK3DCbDLXA0a8XdnZfq0/pub?gid=1704931853&single=true&output=csv")
+
+latest_data <- logged_data %>%
+  rename(
+    vehicle_type = 2,
+    brand_origin = 3,
+    cleanliness = 4,
+    is_new = 5
+  )
+
+report_num_obs <- nrow(latest_data)
+
+report_mean_clean <- latest_data$cleanliness %>%
+  mean(na.rm = TRUE) %>%
+  round(1)
+
+report_max_clean <- latest_data$cleanliness %>%
+  max(na.rm = TRUE)
+
+most_common_vehicle <- latest_data %>%
+  count(vehicle_type, sort = TRUE) %>%
+  slice(1) %>%
+  pull(vehicle_type)
+
+most_common_origin <- latest_data %>%
+  count(brand_origin, sort = TRUE) %>%
+  slice(1) %>%
+  pull(brand_origin)
+```
+A total of `r report_num_obs` vehicle observations were recorded in this dataset.
+
+The average cleanliness score was `r report_mean_clean`, while the highest cleanliness score recorded was `r report_max_clean`.
+
+The most commonly observed vehicle type was `r most_common_vehicle`, and the most common brand origin was `r most_common_origin`.
+```{r}
+latest_data %>%
+  ggplot(aes(x = vehicle_type)) +
+  geom_bar() +
+  theme_minimal() +
+  labs(
+    title = "Vehicle Type Distribution",
+    x = "Vehicle type",
+    y = "Count"
+  )
+```
+The bar chart above shows the distribution of vehicle types in the dataset. This makes it easier to identify which kinds of vehicles appeared most often during the observation period.
+```{r}
+latest_data %>%
+  ggplot(aes(x = brand_origin)) +
+  geom_bar() +
+  theme_minimal() +
+  labs(
+    title = "Brand Origin Distribution",
+    x = "Brand origin",
+    y = "Count"
+  )
+```
+This second bar chart compares the brand origins of the vehicles observed. It provides a simple way to see which brand origins appeared more frequently in the dataset.
+
+Overall, this report shows how observational data can be collected, summarised, and communicated visually through R Markdown. Because the report is connected to a published CSV, the summaries and graphs can change automatically when more observations are added.
