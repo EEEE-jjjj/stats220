@@ -86,11 +86,7 @@ strong {
 This dynamic report presents observational data about vehicles I recorded over time. The data focuses on four main features: the type of vehicle observed, the brand origin, the cleanliness score, and whether the vehicle appeared new or not.
 
 The purpose of this report is to summarise key patterns in the observations and demonstrate how a dynamic report can automatically update when new responses are added to the linked Google Form and Google Sheet.
-
-# Snapshot of the data
-
-<div class="summary-grid"> <div class="summary-card"> <div class="summary-label">Total observations</div> <div class="summary-value">`r report_num_obs`</div> </div> <div class="summary-card"> <div class="summary-label">Average cleanliness</div> <div class="summary-value">`r report_mean_clean`</div> </div> <div class="summary-card"> <div class="summary-label">Most common vehicle</div> <div class="summary-value">`r most_common_vehicle`</div> </div> <div class="summary-card"> <div class="summary-label">Top brand origin</div> <div class="summary-value">`r most_common_origin`</div> </div> </div>
-```{r fig.width=8, fig.height=4}
+```{r}
 logged_data <- read_csv("https://docs.google.com/spreadsheets/d/e/2PACX-1vSFTm-eXrXyj3gEA9BOLHDY30t5utk1GmSt5hfCN8Hj_2RIbzgxa89WVtzMqK3DCbDLXA0a8XdnZfq0/pub?gid=1704931853&single=true&output=csv")
 
 latest_data <- logged_data %>%
@@ -120,6 +116,9 @@ most_common_origin <- latest_data %>%
   slice(1) %>%
   pull(brand_origin)
 ```
+## Snapshot of the data
+<div class="summary-grid"> <div class="summary-card"> <div class="summary-label">Total observations</div> <div class="summary-value">`r report_num_obs`</div> </div> <div class="summary-card"> <div class="summary-label">Average cleanliness</div> <div class="summary-value">`r report_mean_clean`</div> </div> <div class="summary-card"> <div class="summary-label">Most common vehicle</div> <div class="summary-value">`r most_common_vehicle`</div> </div> <div class="summary-card"> <div class="summary-label">Top brand origin</div> <div class="summary-value">`r most_common_origin`</div> </div> </div>
+
 A total of `r report_num_obs` vehicle observations were recorded in this dataset.
 
 The average cleanliness score was `r report_mean_clean`, while the highest cleanliness score recorded was `r report_max_clean`.
@@ -137,7 +136,7 @@ latest_data %>%
   )
 ```
 The bar chart above shows the distribution of vehicle types in the dataset. This makes it easier to identify which kinds of vehicles appeared most often during the observation period.
-```{r}
+```{r fig.width=8, fig.height=4}
 latest_data %>%
   ggplot(aes(x = brand_origin)) +
   geom_bar() +
@@ -152,6 +151,6 @@ This second bar chart compares the brand origins of the vehicles observed. It pr
 
 Overall, this report shows how observational data can be collected, summarised, and communicated visually through R Markdown. Because the report is connected to a published CSV, the summaries and graphs can change automatically when more observations are added.
 
-# Key insights
+## Key insights
 
 The observations suggest that `r most_common_vehicle` vehicles appeared more often than other vehicle types in this dataset. This may reflect the kinds of vehicles that are most visible in the places and times where I collected my observations.
