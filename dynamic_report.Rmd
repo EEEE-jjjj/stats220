@@ -30,8 +30,23 @@ p {
   margin-bottom: 14px;
 }
 
+figure {
+  display: block;
+  margin: 24px 0;
+  width: 100%;
+}
+
 img {
+  display: block;
   max-width: 100%;
+  height: auto;
+  margin: 0 auto;
+}
+
+pre {
+  display: block;
+  max-width: 100%;
+  overflow-x: auto;
 }
 
 strong {
@@ -45,7 +60,7 @@ This dynamic report presents observational data about vehicles I recorded over t
 
 The purpose of this report is to summarise key patterns in the observations and demonstrate how a dynamic report can automatically update when new responses are added to the linked Google Form and Google Sheet.
 
-```{r}
+```{r fig.width=8, fig.height=4}
 logged_data <- read_csv("https://docs.google.com/spreadsheets/d/e/2PACX-1vSFTm-eXrXyj3gEA9BOLHDY30t5utk1GmSt5hfCN8Hj_2RIbzgxa89WVtzMqK3DCbDLXA0a8XdnZfq0/pub?gid=1704931853&single=true&output=csv")
 
 latest_data <- logged_data %>%
@@ -80,7 +95,7 @@ A total of `r report_num_obs` vehicle observations were recorded in this dataset
 The average cleanliness score was `r report_mean_clean`, while the highest cleanliness score recorded was `r report_max_clean`.
 
 The most commonly observed vehicle type was `r most_common_vehicle`, and the most common brand origin was `r most_common_origin`.
-```{r}
+```{r fig.width=8, fig.height=4}
 latest_data %>%
   ggplot(aes(x = vehicle_type)) +
   geom_bar() +
